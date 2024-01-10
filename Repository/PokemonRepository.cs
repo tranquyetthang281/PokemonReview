@@ -1,4 +1,5 @@
-﻿using PokemonReview.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PokemonReview.Data;
 using PokemonReview.Interfaces;
 using PokemonReview.Models;
 
@@ -25,19 +26,19 @@ namespace PokemonReview.Repository
 
         public decimal GetPokemonRating(int pokeId)
         {
-            //var pokemon = GetPokemon(pokeId);
+            var pokemon = _context.Pokemons.Where(p => p.Id == pokeId).Include(p => p.Reviews).FirstOrDefault();
 
-            //if (pokemon == null || pokemon.Reviews == null || pokemon.Reviews.Count <= 0)
-            //    return 0;
-
-            //return (decimal) pokemon.Reviews.Sum(r => r.Rating) / pokemon.Reviews.Count;
-
-            var reviews = _context.Reviews.Where(r => r.Id == pokeId);
-
-            if (reviews.Count() <= 0)
+            if (pokemon == null || pokemon.Reviews == null || pokemon.Reviews.Count <= 0)
                 return 0;
 
-            return (decimal) reviews.Sum(r => r.Rating) / reviews.Count();
+            return (decimal)pokemon.Reviews.Sum(r => r.Rating) / pokemon.Reviews.Count;
+
+            //var reviews = _context.Reviews.Where(r => r.Pokemon.Id == pokeId);
+
+            //if (reviews.Count() <= 0)
+            //    return 0;
+
+            //return (decimal) reviews.Sum(r => r.Rating) / reviews.Count();
         }
 
         public ICollection<Pokemon> GetPokemons()
