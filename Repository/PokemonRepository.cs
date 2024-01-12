@@ -46,7 +46,7 @@ namespace PokemonReview.Repository
             return _context.Pokemons.OrderBy(p => p.Id).ToList();
         }
 
-        public bool IsPokemonExisting(int pokeId)
+        public bool HasPokemon(int pokeId)
         {
             return _context.Pokemons.Any(p => p.Id == pokeId);
         }

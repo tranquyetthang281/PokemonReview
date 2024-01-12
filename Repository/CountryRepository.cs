@@ -42,7 +42,7 @@ namespace PokemonReview.Repository
             return _context.Owners.Where(o => o.Country.Id == countryId).ToList();
         }
 
-        public bool IsCountryExisting(int countryId)
+        public bool HasCountry(int countryId)
         {
             return _context.Countries.Any(c => c.Id == countryId);
         }

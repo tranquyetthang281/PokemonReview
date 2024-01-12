@@ -38,7 +38,7 @@ namespace PokemonReview.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetCountry(int countryId)
         {
-            if (!_countryRepository.IsCountryExisting(countryId))
+            if (!_countryRepository.HasCountry(countryId))
                 return NotFound();
 
             var country = _mapper.Map<CountryDto>(_countryRepository.GetCountry(countryId));

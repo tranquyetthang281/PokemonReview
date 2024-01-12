@@ -29,7 +29,7 @@ namespace PokemonReview.Repository
                                              .Select(c => c.Pokemon).ToList();
         }
 
-        public bool IsCategotyExisting(int categoryId)
+        public bool HasCategoty(int categoryId)
         {
             return _context.Categories.Any(c => c.Id == categoryId);
         }

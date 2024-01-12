@@ -39,7 +39,7 @@ namespace PokemonReview.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetCategory(int categoryId)
         {
-            if (!_categoryRepository.IsCategotyExisting(categoryId))
+            if (!_categoryRepository.HasCategoty(categoryId))
                 return NotFound();
 
             var category = _mapper.Map<CategoryDto>(_categoryRepository.GetCategory(categoryId));

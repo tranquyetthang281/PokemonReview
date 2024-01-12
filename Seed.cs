@@ -5,14 +5,25 @@ namespace PokemonReview
 {
     public class Seed
     {
-        private readonly DataContext dataContext;
+        public static void SeedData(IHost app)
+        {
+            var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+            using (var scope = scopedFactory.CreateScope())
+            {
+                var service = scope.ServiceProvider.GetService<Seed>();
+                service.SeedDataContext();
+            }
+        }
+
+        private readonly DataContext _dataContext;
         public Seed(DataContext context)
         {
-            this.dataContext = context;
+            _dataContext = context;
         }
         public void SeedDataContext()
         {
-            if (!dataContext.PokemonOwners.Any())
+            if (!_dataContext.PokemonOwners.Any())
             {
                 var pokemonOwners = new List<PokemonOwner>()
                 {
@@ -110,8 +121,8 @@ namespace PokemonReview
                         }
                     }
                 };
-                dataContext.PokemonOwners.AddRange(pokemonOwners);
-                dataContext.SaveChanges();
+                _dataContext.PokemonOwners.AddRange(pokemonOwners);
+                _dataContext.SaveChanges();
             }
         }
     }
